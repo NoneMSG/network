@@ -32,47 +32,11 @@ public class EchoServer {
 			System.out.println("[Server] binding " + localHostAddress + " : " + SERVER_PORT);
 
 			// 3. 연결요청 기다림 (Accept)
-			Socket socket = serverSocket.accept(); // blocking (listen status)
+			while (true) {
+				Socket socket = serverSocket.accept(); // blocking (listen
+														// status)
+				new EchoServerReceiveThread(socket).start();
 
-			// 4. 연결 성공
-			InetSocketAddress remoteAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
-			int remoteHostPort = remoteAddress.getPort();
-			String remoteHostAddress = remoteAddress.getAddress().getHostAddress(); // remote
-																					// address이다.
-			System.out.println("[server] conneted from client " + remoteHostAddress + ":" + remoteAddress.getPort());
-
-			try { // 데이터교환용 소켓에 대한 예외처리
-				// 5. socket으로부터 IOStream받기
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"utf-8"),true); //true 옵션은 auto flush기능
-				
-				while(true){
-					//개행까지 읽어드리는 프로토콜 (규칙)
-					String message = br.readLine();
-					if(message == null){
-						//client close the socket 클라이언트가 소켓 닫음
-						System.out.println("[server] disconnected by client.");
-						break;
-					}
-					System.out.println("[server] received : "+message);
-					
-					//data쓰 기
-					//pw.print(message+"\n");
-					pw.println(message);
-				}
-				
-			} catch (SocketException e) {
-				// 클라이언트가 소켓을 정상적으로 닫지 않고 종료 됐을때
-				System.out.println("[server] closed by client");
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (socket != null && socket.isClosed() == false)
-						socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
