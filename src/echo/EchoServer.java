@@ -1,17 +1,11 @@
 package echo;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class EchoServer {
 	private static final int SERVER_PORT = 6060;
@@ -29,7 +23,7 @@ public class EchoServer {
 			String localHostAddress = inetAddress.getHostAddress();
 			InetSocketAddress inetSocketAddress = new InetSocketAddress(localHostAddress, SERVER_PORT);
 			serverSocket.bind(inetSocketAddress);
-			System.out.println("[Server] binding " + localHostAddress + " : " + SERVER_PORT);
+			System.out.println("[Server] "+Thread.currentThread().getId()+" binding " + localHostAddress + " : " + SERVER_PORT);
 
 			// 3. 연결요청 기다림 (Accept)
 			while (true) {

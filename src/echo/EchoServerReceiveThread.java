@@ -20,7 +20,7 @@ public class EchoServerReceiveThread extends Thread {
 		InetSocketAddress remoteAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
 		int remoteHostPort = remoteAddress.getPort();
 		String remoteHostAddress = remoteAddress.getAddress().getHostAddress(); // remote
-		consoleLog("connected from" + remoteHostAddress + ":" + remoteHostPort); // address이다.
+		consoleLog("connected from " +getId()+" "+ remoteHostAddress + ":" + remoteHostPort); // address이다.
 		// System.out.println("[server] conneted from client " +
 		// remoteHostAddress + ":" + remoteAddress.getPort());
 
