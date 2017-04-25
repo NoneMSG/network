@@ -34,7 +34,7 @@ public class ChatClient {
 
 			String ack = br.readLine();
 			if ("registed".equals(ack)) {
-				new ChatClientThread(pw, socket).start();
+				new ChatClientThread(br, socket).start();
 			}
 			while (true) {
 				String input = sc.nextLine();

@@ -68,6 +68,7 @@ public class ChatServerThread extends Thread {
 				if (socket != null && socket.isClosed() == false)
 					socket.close();
 			} catch (IOException e) {
+			
 				e.printStackTrace();
 			}
 		}
@@ -84,7 +85,11 @@ public class ChatServerThread extends Thread {
 			int count = writerPool.size();
 			for (int i = 0; i < count; ++i) {
 				if (writerPool.get(i) == pw) {
-					writerPool.remove(i);
+					if (count < 2) {
+						writerPool.clear();
+					} else {
+						writerPool.remove(i);
+					}
 				}
 			}
 		}
