@@ -18,12 +18,14 @@ public class ChatClient {
 
 		Socket socket = null;
 		Scanner sc = new Scanner(System.in);
+		BufferedReader br =null;
+		PrintWriter pw =null;
 		try {
 			socket = new Socket();
 			socket.connect(new InetSocketAddress(SERVER_IP, SERVER_PORT));
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
 
 			System.out.print("닉네임>>");
 

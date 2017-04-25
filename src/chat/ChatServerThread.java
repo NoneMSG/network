@@ -20,10 +20,12 @@ public class ChatServerThread extends Thread {
 	}
 
 	@Override
-	public void run() {
+	public void run(){
+		BufferedReader br=null;
+		PrintWriter pw =null;
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "utf-8"));
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), "utf-8"), true);
+			 br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "utf-8"));
+			 pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), "utf-8"), true);
 
 			while (true) {
 				// 요청받기
@@ -62,9 +64,13 @@ public class ChatServerThread extends Thread {
 				}
 			}
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		} finally {
 			try {
+				
+				br.close();
+				pw.close();
 				if (socket != null && socket.isClosed() == false)
 					socket.close();
 			} catch (IOException e) {
@@ -85,11 +91,7 @@ public class ChatServerThread extends Thread {
 			int count = writerPool.size();
 			for (int i = 0; i < count; ++i) {
 				if (writerPool.get(i) == pw) {
-					if (count < 2) {
-						writerPool.clear();
-					} else {
-						writerPool.remove(i);
-					}
+					writerPool.remove(i);
 				}
 			}
 		}
