@@ -98,12 +98,13 @@ public class ChatServerThread extends Thread {
 
 	private void removeWriter(Writer pw) {
 		synchronized (writerPool) { //동기화의 이유는 데이터가 동일함을 유지하기 위함이다.
-			int count = writerPool.size(); //현재 리스트의 크기
-			for (int i = 0; i < count; ++i) {// 만큼 돌면서
-				if (writerPool.get(i) == pw) { //같은 삭제요청이 들어온 객체를 찾아
-					writerPool.remove(i);//지운다.
-				}
-			}
+//			int count = writerPool.size(); //현재 리스트의 크기
+//			for (int i = 0; i < count; ++i) {// 만큼 돌면서
+//				if (writerPool.get(i) == pw) { //같은 삭제요청이 들어온 객체를 찾아
+//					writerPool.remove(i);//지운다.
+//				}
+//			}
+			writerPool.remove(pw); //객체자신 찾아서 지우기 가능
 		}
 	}
 
